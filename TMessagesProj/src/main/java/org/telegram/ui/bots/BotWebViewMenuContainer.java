@@ -64,7 +64,7 @@ import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.SimpleFloatPropertyCompat;
 import org.telegram.ui.DialogsActivity;
-import org.telegram.ui.LaunchActivity;
+import org.telegram.ui.LaunchActivity;import org.telegram.ui.YuurigramDevToolsActivity;
 import org.telegram.ui.PaymentFormActivity;
 import org.telegram.ui.Stars.StarsController;
 import org.telegram.ui.web.BotWebViewContainer;
@@ -257,7 +257,7 @@ public class BotWebViewMenuContainer extends FrameLayout implements Notification
             botMenuItem = menu.addItem(1000, R.drawable.ic_ab_other);
             botMenuItem.setVisibility(GONE);
 
-            botMenuItem.addSubItem(R.id.menu_reload_page, R.drawable.msg_retry, LocaleController.getString(R.string.BotWebViewReloadPage));
+import org.telegram.ui.LaunchActivity;import org.telegram.ui.YuurigramDevToolsActivity;
             settingsItem = botMenuItem.addSubItem(R.id.menu_settings, R.drawable.msg_settings, LocaleController.getString(R.string.BotWebViewSettings));
             settingsItem.setVisibility(View.GONE);
             addToHomeScreenItem = botMenuItem.addSubItem(R.id.menu_add_to_home_screen_bot, R.drawable.msg_home, LocaleController.getString(R.string.AddShortcut));
@@ -707,7 +707,7 @@ public class BotWebViewMenuContainer extends FrameLayout implements Notification
                                 webViewContainer.reload();
                             } else if (id == R.id.menu_settings) {
                                 webViewContainer.onSettingsButtonPressed();
-                            } else if (id == R.id.menu_add_to_home_screen_bot) {
+                            } else if (id == R.id.menu_devtools) {                                YuurigramDevToolsActivity.open(getContext(), webViewContainer.getWebView());                            } else if (id == R.id.menu_add_to_home_screen_bot) {
                                 MediaDataController.getInstance(currentAccount).installShortcut(botId, MediaDataController.SHORTCUT_TYPE_ATTACHED_BOT);
                             } else if (id == R.id.menu_tos_bot) {
                                 Browser.openUrl(getContext(), LocaleController.getString(R.string.BotWebViewToSLink));
