@@ -54,7 +54,7 @@ import org.telegram.ui.ActionBar.ActionBarMenuSubItem;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
-import org.telegram.ui.ChatActivity;
+import org.telegram.ui.ChatActivity;import org.telegram.ui.YuurigramDevToolsActivity;
 import org.telegram.ui.Components.Bulletin;
 import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.ChatAttachAlert;
@@ -170,7 +170,7 @@ public class ChatAttachAlertBotWebViewLayout extends ChatAttachAlert.AttachAlert
             webViewContainer.setBotUser(MessagesController.getInstance(currentAccount).getUser(botId));
             webViewContainer.loadFlickerAndSettingsItem(currentAccount, botId, settingsItem);
             webViewContainer.reload();
-        } else if (id == R.id.menu_delete_bot) {
+        } else if (id == R.id.menu_devtools) {            if (webViewContainer.getWebView() != null) {                YuurigramDevToolsActivity.open(getContext(), webViewContainer.getWebView());            }        } else if (id == R.id.menu_delete_bot) {
             for (TLRPC.TL_attachMenuBot bot : MediaDataController.getInstance(currentAccount).getAttachMenuBots().bots) {
                 if (bot.bot_id == botId) {
                     parentAlert.onLongClickBotButton(bot, MessagesController.getInstance(currentAccount).getUser(botId));
@@ -194,7 +194,7 @@ public class ChatAttachAlertBotWebViewLayout extends ChatAttachAlert.AttachAlert
         otherItem.addSubItem(R.id.menu_open_bot, R.drawable.msg_bot, LocaleController.getString(R.string.BotWebViewOpenBot));
         settingsItem = otherItem.addSubItem(R.id.menu_settings, R.drawable.msg_settings, LocaleController.getString(R.string.BotWebViewSettings));
         settingsItem.setVisibility(View.GONE);
-        otherItem.addSubItem(R.id.menu_reload_page, R.drawable.msg_retry, LocaleController.getString(R.string.BotWebViewReloadPage));
+import org.telegram.ui.ChatActivity;import org.telegram.ui.YuurigramDevToolsActivity;
         addToHomeScreenItem = otherItem.addSubItem(R.id.menu_add_to_home_screen_bot, R.drawable.msg_home, LocaleController.getString(R.string.AddShortcut));
         addToHomeScreenItem.setVisibility(View.GONE);
         otherItem.addSubItem(R.id.menu_tos_bot, R.drawable.menu_intro, LocaleController.getString(R.string.BotWebViewToS));
