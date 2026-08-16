@@ -301,8 +301,8 @@ public class UserInfoActivity extends UniversalFragment implements NotificationC
     private final ArrayList<Integer> accountNumbers = new ArrayList<>();
     private void updateAccounts() {
         accountNumbers.clear();
-        for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
-            if (UserConfig.getInstance(a).isClientActivated() && currentAccount != a) {
+        for (int a : UserConfig.getActivatedAccountIds()) {
+            if (currentAccount != a) {
                 accountNumbers.add(a);
             }
         }
@@ -462,17 +462,14 @@ public class UserInfoActivity extends UniversalFragment implements NotificationC
     @Override
     protected void onClick(UItem item, View view, int position, float x, float y) {
         if (item.id == BUTTON_ADD_ACCOUNT) {
-            int freeAccounts = 0;
             Integer availableAccount = null;
             for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
                 if (!UserConfig.getInstance(a).isClientActivated()) {
-                    freeAccounts++;
-                    if (availableAccount == null) {
-                        availableAccount = a;
-                    }
+                    availableAccount = a;
+                    break;
                 }
             }
-            if (freeAccounts > 0 && availableAccount != null) {
+            if (availableAccount != null) {
                 presentFragment(new LoginActivity(availableAccount));
             } else {
                 showDialog(new LimitReachedBottomSheet(this, getContext(), TYPE_ACCOUNTS, currentAccount, null));

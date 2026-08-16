@@ -25,12 +25,12 @@ public class UserConfig extends BaseController {
 
     public static int selectedAccount;
     /**
-     * Practical high account capacity for Android. A literal infinite number is
-     * not possible because account-scoped controllers use indexed storage.
-     * The slot is initialized lazily by each controller, so unused slots are cheap.
+     * High account capacity for Yuurigram. A literal infinite number is not
+     * possible because account-scoped controllers use indexed storage. The
+     * controller graph is initialized lazily, so unused slots stay dormant.
      */
-    public final static int MAX_ACCOUNT_DEFAULT_COUNT = 100;
-    public final static int MAX_ACCOUNT_COUNT = 100;
+    public final static int MAX_ACCOUNT_DEFAULT_COUNT = 9999;
+    public final static int MAX_ACCOUNT_COUNT = 9999;
 
     private final Object sync = new Object();
     private volatile boolean configLoaded;
@@ -104,30 +104,62 @@ public class UserConfig extends BaseController {
     }
 
     public static int getActivatedAccountsCount() {
-        int count = 0;
-        for (int a = 0; a < MAX_ACCOUNT_COUNT; a++) {
-            if (AccountInstance.getInstance(a).getUserConfig().isClientActivated()) {
-                count++;
-            }
-        }
-        return count;
+        return getActivatedAccountIds().length;
     }
 
     /**
-     * Returns the smallest startup range that contains all persisted accounts.
-     * Empty high-numbered slots stay dormant until the user logs into them.
+     * Returns only account slots whose UserConfig is already loaded and logged in.
+     * This method deliberately never creates AccountInstance or controller objects.
      */
-    public static int getStartupAccountCount() {
-        int count = 1;
-        if (ApplicationLoader.applicationContext == null) {
-            return count;
-        }
-        for (int a = 1; a < MAX_ACCOUNT_COUNT; a++) {
-            if (getInstance(a).getPreferences().contains("user")) {
-                count = a + 1;
+    public static int[] getActivatedAccountIds() {
+        int[] ids = new int[Math.min(MAX_ACCOUNT_COUNT, 64)];
+        int count = 0;
+        for (int a = 0; a < MAX_ACCOUNT_COUNT; a++) {
+            UserConfig config = Instance[a];
+            if (config != null && config.isClientActivated()) {
+                if (count == ids.length) {
+                    ids = Arrays.copyOf(ids, Math.min(MAX_ACCOUNT_COUNT, ids.length * 2));
+                }
+                ids[count++] = a;
             }
         }
-        return count;
+        return Arrays.copyOf(ids, count);
+    }
+
+    /**
+     * Returns the persisted account slots. The scan is needed for upgrades from
+     * older builds because Android does not expose a list of SharedPreferences
+     * files. Only these slots are initialized during application startup.
+     */
+    public static int[] getStartupAccountIds() {
+        if (ApplicationLoader.applicationContext == null) {
+            return new int[]{0};
+        }
+        int[] ids = new int[Math.min(MAX_ACCOUNT_COUNT, 64)];
+        int count = 0;
+        for (int a = 0; a < MAX_ACCOUNT_COUNT; a++) {
+            String preferencesName = a == 0 ? "userconfing" : "userconfig" + a;
+            if (ApplicationLoader.applicationContext.getSharedPreferences(preferencesName, Context.MODE_PRIVATE).contains("user")) {
+                if (count == ids.length) {
+                    ids = Arrays.copyOf(ids, Math.min(MAX_ACCOUNT_COUNT, ids.length * 2));
+                }
+                ids[count++] = a;
+            }
+        }
+        if (count == 0) {
+            ids = new int[]{0};
+        } else {
+            ids = Arrays.copyOf(ids, count);
+        }
+        return ids;
+    }
+
+    /**
+     * Kept for source compatibility with callers that need a count. New code
+     * should prefer getStartupAccountIds() to avoid initializing empty gaps.
+     */
+    public static int getStartupAccountCount() {
+        return getStartupAccountIds().length;
     }
 
     public UserConfig(int instance) {
@@ -135,8 +167,8 @@ public class UserConfig extends BaseController {
     }
 
     public static boolean hasPremiumOnAccounts() {
-        for (int a = 0; a < MAX_ACCOUNT_COUNT; a++) {
-            if (AccountInstance.getInstance(a).getUserConfig().isClientActivated() && AccountInstance.getInstance(a).getUserConfig().getUserConfig().isPremium()) {
+        for (int a : getActivatedAccountIds()) {
+            if (getInstance(a).isPremium()) {
                 return true;
             }
         }

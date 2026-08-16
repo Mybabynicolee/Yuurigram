@@ -212,7 +212,7 @@ public class ApplicationLoader extends Application {
                     }
 
                     boolean isSlow = isConnectionSlow();
-                    for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
+                    for (int a : UserConfig.getActivatedAccountIds()) {
                         ConnectionsManager.getInstance(a).checkConnection();
                         FileLoader.getInstance(a).onNetworkChanged(isSlow);
                     }
@@ -245,8 +245,8 @@ public class ApplicationLoader extends Application {
 
         SharedConfig.loadConfig();
         SharedPrefsHelper.init(applicationContext);
-        final int startupAccountCount = UserConfig.getStartupAccountCount();
-        for (int a = 0; a < startupAccountCount; a++) { // Initialize only persisted accounts
+        final int[] startupAccountIds = UserConfig.getStartupAccountIds();
+        for (int a : startupAccountIds) { // Initialize only persisted accounts
             UserConfig.getInstance(a).loadConfig();
             MessagesController.getInstance(a);
             if (a == 0) {
@@ -268,7 +268,7 @@ public class ApplicationLoader extends Application {
         }
 
         MediaController.getInstance();
-        for (int a = 0; a < startupAccountCount; a++) { // Initialize only persisted accounts
+        for (int a : startupAccountIds) { // Initialize only persisted accounts
             ContactsController.getInstance(a).checkAppAccount();
             DownloadController.getInstance(a);
         }
