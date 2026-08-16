@@ -87,7 +87,7 @@ import org.telegram.ui.Components.SimpleFloatPropertyCompat;
 import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.Components.VerticalPositionAutoAnimator;
 import org.telegram.ui.DialogsActivity;
-import org.telegram.ui.LaunchActivity;
+import org.telegram.ui.LaunchActivity;import org.telegram.ui.YuurigramDevToolsActivity;
 import org.telegram.ui.PaymentFormActivity;
 import org.telegram.ui.Stars.StarsController;
 import org.telegram.ui.Stories.DarkThemeResourceProvider;
@@ -1017,7 +1017,7 @@ public class BotWebViewAttachedSheet implements NotificationCenter.NotificationC
         otherItem.addSubItem(R.id.menu_open_bot, R.drawable.msg_bot, LocaleController.getString(R.string.BotWebViewOpenBot));
         settingsItem = otherItem.addSubItem(R.id.menu_settings, R.drawable.msg_settings, LocaleController.getString(R.string.BotWebViewSettings));
         settingsItem.setVisibility(View.GONE);
-        otherItem.addSubItem(R.id.menu_reload_page, R.drawable.msg_retry, LocaleController.getString(R.string.BotWebViewReloadPage));
+import org.telegram.ui.LaunchActivity;import org.telegram.ui.YuurigramDevToolsActivity;
         if (userbot != null && userbot.bot_has_main_app) {
             otherItem.addSubItem(R.id.menu_add_to_home_screen_bot, R.drawable.msg_home, LocaleController.getString(R.string.AddShortcut));
         }
@@ -1071,7 +1071,7 @@ public class BotWebViewAttachedSheet implements NotificationCenter.NotificationC
                     webViewContainer.reload();
                 } else if (id == R.id.menu_settings) {
                     webViewContainer.onSettingsButtonPressed();
-                } else if (id == R.id.menu_delete_bot) {
+import org.telegram.ui.LaunchActivity;import org.telegram.ui.YuurigramDevToolsActivity;
                     deleteBot(currentAccount, botId, () -> dismiss());
                 } else if (id == R.id.menu_add_to_home_screen_bot) {
                     MediaDataController.getInstance(currentAccount).installShortcut(botId, MediaDataController.SHORTCUT_TYPE_ATTACHED_BOT);
