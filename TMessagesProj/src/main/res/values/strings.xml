@@ -3740,6 +3740,7 @@
     <string name="BotWebViewToS">Terms of Use</string>
     <string name="BotWebViewToSLink">https://telegram.org/tos/mini-apps</string>
     <string name="BotWebViewReloadPage">Reload page</string>
+    <string name="BotWebViewDevTools">DevTools</string>
     <string name="BotWebViewDeleteBot">Delete bot</string>
     <string name="BotWebViewRequestAllow">Allow</string>
     <string name="BotWebViewRequestDontAllow">Don\'t Allow</string>
