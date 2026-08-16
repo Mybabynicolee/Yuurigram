@@ -46,7 +46,7 @@ jobs:
             "platforms;android-35" \
             "build-tools;35.0.0" \
             "ndk;27.2.12479018" \
-            "cmake;3.10.2"
+            "cmake;3.22.1"
           yes | sdkmanager --licenses >/dev/null || true
 
       - name: Validate required build secrets
@@ -74,6 +74,11 @@ jobs:
           install -d -m 700 TMessagesProj/config
           printf '%s' "$KEYSTORE_B64" | base64 --decode > TMessagesProj/config/release.keystore
           chmod 600 TMessagesProj/config/release.keystore
+
+      - name: Align native build with runner CMake
+        run: |
+          set -euo pipefail
+          sed -i 's/3\.10\.2/3.22.1/g' TMessagesProj/build.gradle TMessagesProj_App/build.gradle
 
       - name: Build signed release APK and AAB
         env:
