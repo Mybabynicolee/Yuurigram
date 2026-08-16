@@ -97,7 +97,7 @@ import org.telegram.ui.Components.PasscodeView;
 import org.telegram.ui.Components.SimpleFloatPropertyCompat;
 import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.DialogsActivity;
-import org.telegram.ui.LaunchActivity;
+import org.telegram.ui.LaunchActivity;import org.telegram.ui.YuurigramDevToolsActivity;
 import org.telegram.ui.PaymentFormActivity;
 import org.telegram.ui.ProfileActivity;
 import org.telegram.ui.Stars.StarsController;
@@ -1702,7 +1702,7 @@ public class BotWebViewSheet extends Dialog implements NotificationCenter.Notifi
             .addIf(onVerifiedAge == null && hasSettings, R.drawable.msg_settings, LocaleController.getString(R.string.BotWebViewSettings), () -> {
                 webViewContainer.onSettingsButtonPressed();
             })
-            .add(R.drawable.msg_retry, LocaleController.getString(R.string.BotWebViewReloadPage), () -> {
+            .add(R.drawable.menu_feature_code, LocaleController.getString(R.string.BotWebViewDevTools), () -> {                if (webViewContainer.getWebView() != null) {                    YuurigramDevToolsActivity.open(getContext(), webViewContainer.getWebView());                }            })            .add(R.drawable.msg_retry, LocaleController.getString(R.string.BotWebViewReloadPage), () -> {
                 if (webViewContainer.getWebView() != null) {
                     webViewContainer.getWebView().animate().cancel();
                     webViewContainer.getWebView().animate().alpha(0).start();
