@@ -245,7 +245,8 @@ public class ApplicationLoader extends Application {
 
         SharedConfig.loadConfig();
         SharedPrefsHelper.init(applicationContext);
-        for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) { //TODO improve account
+        final int startupAccountCount = UserConfig.getStartupAccountCount();
+        for (int a = 0; a < startupAccountCount; a++) { // Initialize only persisted accounts
             UserConfig.getInstance(a).loadConfig();
             MessagesController.getInstance(a);
             if (a == 0) {
@@ -267,7 +268,7 @@ public class ApplicationLoader extends Application {
         }
 
         MediaController.getInstance();
-        for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) { //TODO improve account
+        for (int a = 0; a < startupAccountCount; a++) { // Initialize only persisted accounts
             ContactsController.getInstance(a).checkAppAccount();
             DownloadController.getInstance(a);
         }

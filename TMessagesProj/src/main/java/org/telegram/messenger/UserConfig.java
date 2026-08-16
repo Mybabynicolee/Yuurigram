@@ -24,8 +24,13 @@ import java.util.Arrays;
 public class UserConfig extends BaseController {
 
     public static int selectedAccount;
-    public final static int MAX_ACCOUNT_DEFAULT_COUNT = 3;
-    public final static int MAX_ACCOUNT_COUNT = 4;
+    /**
+     * Practical high account capacity for Android. A literal infinite number is
+     * not possible because account-scoped controllers use indexed storage.
+     * The slot is initialized lazily by each controller, so unused slots are cheap.
+     */
+    public final static int MAX_ACCOUNT_DEFAULT_COUNT = 100;
+    public final static int MAX_ACCOUNT_COUNT = 100;
 
     private final Object sync = new Object();
     private volatile boolean configLoaded;
@@ -108,6 +113,23 @@ public class UserConfig extends BaseController {
         return count;
     }
 
+    /**
+     * Returns the smallest startup range that contains all persisted accounts.
+     * Empty high-numbered slots stay dormant until the user logs into them.
+     */
+    public static int getStartupAccountCount() {
+        int count = 1;
+        if (ApplicationLoader.applicationContext == null) {
+            return count;
+        }
+        for (int a = 1; a < MAX_ACCOUNT_COUNT; a++) {
+            if (getInstance(a).getPreferences().contains("user")) {
+                count = a + 1;
+            }
+        }
+        return count;
+    }
+
     public UserConfig(int instance) {
         super(instance);
     }
@@ -122,7 +144,7 @@ public class UserConfig extends BaseController {
     }
 
     public static int getMaxAccountCount() {
-        return hasPremiumOnAccounts() ? 5 : 3;
+        return MAX_ACCOUNT_COUNT;
     }
 
     public int getNewMessageId() {

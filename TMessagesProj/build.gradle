@@ -82,6 +82,8 @@ dependencies {
 }
 
 def isWindows = String.valueOf(DefaultNativePlatform.currentOperatingSystem.toFamilyName() == OperatingSystemFamily.WINDOWS)
+def yuurigramApiId = project.findProperty("TELEGRAM_API_ID") ?: "0"
+def yuurigramApiHash = (project.findProperty("TELEGRAM_API_HASH") ?: "").toString().replace("\\", "\\\\").replace("\"", "\\\"")
 android {
     compileSdkVersion 35
     buildToolsVersion '35.0.0'
@@ -110,6 +112,9 @@ android {
 
 
     defaultConfig {
+        buildConfigField "int", "YUURIGRAM_API_ID", yuurigramApiId.toString()
+        buildConfigField "String", "YUURIGRAM_API_HASH", "\"" + yuurigramApiHash + "\""
+
         minSdkVersion 21
         targetSdkVersion 35
 
@@ -239,8 +244,6 @@ def getProps(String propName) {
         return "";
     }
 }
-apply plugin: 'com.google.gms.google-services'
-
 task checkVisibility {
     doFirst {
         def isPrivateBuild = project.gradle.startParameter.taskNames.find {

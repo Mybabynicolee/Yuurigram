@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppName">Telegram</string>
-    <string name="AppNameBeta">Telegram Beta</string>
+    <string name="AppName">Yuurigram</string>
+    <string name="AppNameBeta">Yuurigram Beta</string>
     <string name="LanguageName">English</string>
     <string name="English">English</string>
     <string name="LanguageNameInEnglish">English</string>
@@ -5719,8 +5719,8 @@
     <string name="SimilarChannelsLimitTitle">Similar Channels</string>
     <string name="SimilarChannelsLimitSubtitle">View up to %d similar channels</string>
     <string name="DoubledLimits">Doubled Limits</string>
-    <string name="LimitReachedAccounts">Sorry, you can\'t add more than **%1$d** accounts. You can increase this limit to **%2$d** by upgrading to **Telegram Premium**.</string>
-    <string name="LimitReachedAccountsPremium">Sorry, you can\'t add more than **%1$d** accounts.</string>
+    <string name="LimitReachedAccounts">Yuurigram supports up to **%1$d** accounts in this build. Remove an account before adding another.</string>
+    <string name="LimitReachedAccountsPremium">Yuurigram supports up to **%1$d** accounts in this build.</string>
     <string name="PremiumPreviewVoiceToText">Voice-to-Text Conversion</string>
     <string name="PremiumPreviewVoiceToTextDescription">Ability to read the transcript of any incoming voice message.</string>
     <string name="PremiumPreviewVoiceToTextDescription2">Subscribe to Telegram Premium to be able to convert voice and video messages to text.</string>
@@ -10553,8 +10553,8 @@
     <string name="SettingsLanguage">Language</string>
     <string name="AddAccountInfo1_one">You can add %d additional account.</string>
     <string name="AddAccountInfo1_other">You can add %d additional accounts.</string>
-    <string name="AddAccountInfo2_one">Subscribe to **Telegram Premium** to use up to %d account.</string>
-    <string name="AddAccountInfo2_other">Subscribe to **Telegram Premium** to use up to %d accounts.</string>
+    <string name="AddAccountInfo2_one">Yuurigram supports up to %d account in this build.</string>
+    <string name="AddAccountInfo2_other">Yuurigram supports up to %d accounts in this build.</string>
 
     <string name="CocoonPoweredBy">Translations are powered by\n**🥚 Cocoon**.</string>
     <string name="CocoonPoweredByLink">**How does it work?**</string>
